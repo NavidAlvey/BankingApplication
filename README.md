@@ -1,17 +1,19 @@
 # Banking Application
 
 ## Application Overview
-***Account Creation & Verification**
-***Current Money Operations**
+**Account Creation & Verification**
+
+**Current Money Operations**
 - Debit
 - Credit
 - Transfers
+
 ***//Future Operations//***
 - Credit Points
 - Points Shop
 - Credit Score
 
-***Documentation**
+**Documentation**
 - Swagger w/ Swagger UI
 
 ## Start Application Services
