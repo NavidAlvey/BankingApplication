@@ -11,6 +11,7 @@ import com.nalvey.the_alvey_bank.dto.BankResponse;
 import com.nalvey.the_alvey_bank.dto.CreditDebitRequest;
 import com.nalvey.the_alvey_bank.dto.EmailDetails;
 import com.nalvey.the_alvey_bank.dto.InquiryRequest;
+import com.nalvey.the_alvey_bank.dto.TransactionDto;
 import com.nalvey.the_alvey_bank.dto.TransferRequest;
 import com.nalvey.the_alvey_bank.dto.UserRequest;
 import com.nalvey.the_alvey_bank.entity.User;
@@ -26,7 +27,10 @@ public class UserServiceImpl implements UserService {
     @Autowired
     EmailService emailService;
 
-// *** NEW ACCOUNT CREATION ***
+    @Autowired
+    TransactionService transactionService;
+
+// --- NEW ACCOUNT CREATION -------------------------------------------------------------------------------------------------------
     @Override
     public BankResponse createAccount(UserRequest userRequest) {
          // Creating an account - saving a new user into the DB
@@ -37,7 +41,6 @@ public class UserServiceImpl implements UserService {
                 .responseMessage(AccountUtils.ACCOUNT_EXISTS_MESSAGE)
                 .accountInfo(null)
                 .build();
-                
         }        
 
         User newUser = User.builder()
@@ -78,7 +81,7 @@ public class UserServiceImpl implements UserService {
             .build();
 
     }
-// *** BALANCE INQUIRY ***
+// --- BALANCE INQUIRY -------------------------------------------------------------------------------------------------------
     @Override
     public BankResponse balanceInquiry(InquiryRequest request) {
         // Check if provided account number exists in the DB
@@ -102,7 +105,7 @@ public class UserServiceImpl implements UserService {
                 .build())
             .build();
     }
-// *** NAME INQUIRY ***
+// --- NAME INQUIRY -------------------------------------------------------------------------------------------------------
     @Override
     public String nameInquiry(InquiryRequest request) {
         boolean isAccountExist = userRepository.existsByAccountNumber(request.getAccountNumber());
@@ -112,7 +115,7 @@ public class UserServiceImpl implements UserService {
         User foundUser = userRepository.findByAccountNumber(request.getAccountNumber());
         return foundUser.getFirstName() + " " + foundUser.getLastName();
     }
-// *** CREDIT ACCOUNT ***
+// --- CREDIT ACCOUNT -------------------------------------------------------------------------------------------------------
     @Override
     public BankResponse creditAccount(CreditDebitRequest request) {
         // checking if the account exists
@@ -124,21 +127,29 @@ public class UserServiceImpl implements UserService {
                 .accountInfo(null) // set to null because account number does not exist
                 .build();
         }
-        User usertoCredit = userRepository.findByAccountNumber(request.getAccountNumber());
-        usertoCredit.setAccountBalance(usertoCredit.getAccountBalance().add(request.getAmount())); // adding BigDecimals is different than adding integers -> must use .add to append
-        userRepository.save(usertoCredit);
+        User userToCredit = userRepository.findByAccountNumber(request.getAccountNumber());
+        userToCredit.setAccountBalance(userToCredit.getAccountBalance().add(request.getAmount())); // adding BigDecimals is different than adding integers -> must use .add to append
+        userRepository.save(userToCredit);
+        
+        // Save Transaction
+        TransactionDto transactionDto = TransactionDto.builder()
+            .accountNumber(userToCredit.getAccountNumber())
+            .transactionType("CREDIT")
+            .amount(request.getAmount())
+            .build();
+        transactionService.saveTransaction(transactionDto);
         
         return BankResponse.builder()
             .responseCode(AccountUtils.ACCOUNT_CREDITED_SUCCESS_CODE)
             .responseMessage(AccountUtils.ACCOUNT_CREDITED_SUCCESS_MESSAGE)
             .accountInfo(AccountInfo.builder()
-                .accountName(usertoCredit.getFirstName() + " " + usertoCredit.getLastName())
-                .accountBalance(usertoCredit.getAccountBalance())
+                .accountName(userToCredit.getFirstName() + " " + userToCredit.getLastName())
+                .accountBalance(userToCredit.getAccountBalance())
                 .accountNumber(request.getAccountNumber())
                 .build())
             .build();
     }
-// *** DEBIT ACCOUNT ***
+// --- DEBIT ACCOUNT -------------------------------------------------------------------------------------------------------
     @Override
     public BankResponse debitAccount(CreditDebitRequest request) {
         // check if the account exists
@@ -163,6 +174,15 @@ public class UserServiceImpl implements UserService {
         } else {
             userToDebit.setAccountBalance(userToDebit.getAccountBalance().subtract(request.getAmount()));
             userRepository.save(userToDebit);
+   
+            // Save Transaction
+            TransactionDto transactionDto = TransactionDto.builder()
+                .accountNumber(userToDebit.getAccountNumber())
+                .transactionType("DEBIT")
+                .amount(request.getAmount())
+                .build();
+            transactionService.saveTransaction(transactionDto);
+
             return BankResponse.builder()
                 .responseCode(AccountUtils.ACCOUNT_DEBITED_SUCCESS_CODE)
                 .responseMessage(AccountUtils.ACCOUNT_DEBITED_SUCCESS_MESSAGE)
@@ -174,7 +194,7 @@ public class UserServiceImpl implements UserService {
                 .build();
         }
     }
-// *** TRANSFER DEBIT TO CREDIT ***
+// --- TRANSFER DEBIT TO CREDIT -------------------------------------------------------------------------------------------------------
     @Override
     public BankResponse transfer(TransferRequest request) {
         // get the account to debit (check if it exists)
@@ -229,6 +249,14 @@ public class UserServiceImpl implements UserService {
             .build();
         
         emailService.sendEmailAlert(creditAlert);
+
+        // Save Transaction
+        TransactionDto transactionDto = TransactionDto.builder()
+            .accountNumber(destinationAccuntUser.getAccountNumber())
+            .transactionType("TRANSFER")
+            .amount(request.getAmount())
+            .build();
+        transactionService.saveTransaction(transactionDto);
 
         return BankResponse.builder()
             .responseCode(AccountUtils.TRANSFER_SUCCESSFUL_CODE)

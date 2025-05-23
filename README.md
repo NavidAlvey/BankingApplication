@@ -36,59 +36,59 @@
 4. After API call is made, `Postgres` database in `pgAdmin4` will update: `refresh` database and view changes
 
 ## Documentation w/ Swagger
-1. In new window tab, enter URL: <a href="localhost:8080/swagger-ui/index.html#/" target="_blank">`localhost:8080/swagger-ui/index.html#/`</a>
+1. In new window tab, enter URL: `localhost:8080/swagger-ui/index.html#/`
 
 
 ## JSON Structure of Each API Call
 **Create Account** - `POST`
 ```{
-    "firstName":"string"
-    "lastName":"string"
-    "otherName":"string"
-    "gender":"string"
-    "address":"string"
-    "stateOfOrigin":"string"
-    "email":"string"
-    "phoneNumber":"string"
-    "alternativePhoneNumber":"string"
+    "firstName": "string"
+    "lastName": "string"
+    "otherName": "string"
+    "gender": "string"
+    "address": "string"
+    "stateOfOrigin": "string"
+    "email": "string"
+    "phoneNumber": "string"
+    "alternativePhoneNumber": "string"
  }
  ```
 
 **Balance Inquiry** - `GET`
 ```
 {
-    "accountNumber":"string"
+    "accountNumber": "string"
 }
 ```
 
 **Name Inquiry** - `GET`
 ```
 {
-    "accountNumber":"string"
+    "accountNumber": "string"
 }
 ```
 
 **Credit Account** - `POST`
 ```
 {
-    "accountNumber":"string"
-    "amount":0
+    "accountNumber": "string"
+    "amount": 0
 }
 ```
 
 **Debit Account** - `POST`
 ```
 {
-    "accountNumber":"string"
-    "amount":0
+    "accountNumber": "string"
+    "amount": 0
 }
 ```
 
 **Transfer Debit to Credit** - `POST`
 ```
 {
-    "sourceAccountNumber":"string"
-    "destinationAccountNumber":"string"
-    "amount":0
+    "sourceAccountNumber": "string"
+    "destinationAccountNumber": "string"
+    "amount": 0
 }
 ```
