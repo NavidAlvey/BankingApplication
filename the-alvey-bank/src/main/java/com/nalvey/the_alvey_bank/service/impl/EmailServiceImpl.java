@@ -20,7 +20,7 @@ public class EmailServiceImpl implements EmailService {
 
     @Override
     public void sendEmailAlert(EmailDetails emailDetails) {
-        try {
+        /*try {
             SimpleMailMessage mailMessage = new SimpleMailMessage();
             mailMessage.setFrom(senderEmail);
             mailMessage.setTo(emailDetails.getRecipient());
@@ -32,6 +32,6 @@ public class EmailServiceImpl implements EmailService {
 
         } catch (MailException e) {
             throw new RuntimeException(e);
-        }
+        }*/
     }
 }
