@@ -34,6 +34,7 @@
     - Select `Body > raw` and input `JSON` formatted fields to test API
     - View results in "Responses" tab below
 4. After API call is made, `Postgres` database in `pgAdmin4` will update: `refresh` database and view changes
+5. After any form of transaction is made (ie. CREDIT, DEBIT, TRANSFER) view transaction history records in the transaction table
 
 ## Documentation w/ Swagger
 1. In new window tab, enter URL: `localhost:8080/swagger-ui/index.html#/`
@@ -42,15 +43,15 @@
 ## JSON Structure of Each API Call
 **Create Account** - `POST`
 ```{
-    "firstName": "string"
-    "lastName": "string"
-    "otherName": "string"
-    "gender": "string"
-    "address": "string"
-    "stateOfOrigin": "string"
-    "email": "string"
-    "phoneNumber": "string"
-    "alternativePhoneNumber": "string"
+    "firstName": "string",
+    "lastName": "string",
+    "otherName": "string",
+    "gender": "string",
+    "address": "string",
+    "stateOfOrigin": "string",
+    "email": "string",
+    "phoneNumber": "string",
+    "alternativePhoneNumber": "string",
  }
  ```
 
@@ -71,7 +72,7 @@
 **Credit Account** - `POST`
 ```
 {
-    "accountNumber": "string"
+    "accountNumber": "string",
     "amount": 0
 }
 ```
@@ -79,7 +80,7 @@
 **Debit Account** - `POST`
 ```
 {
-    "accountNumber": "string"
+    "accountNumber": "string",
     "amount": 0
 }
 ```
@@ -87,8 +88,26 @@
 **Transfer Debit to Credit** - `POST`
 ```
 {
-    "sourceAccountNumber": "string"
-    "destinationAccountNumber": "string"
+    "sourceAccountNumber": "string",
+    "destinationAccountNumber": "string",
     "amount": 0
 }
+```
+**Bank Statement** - `GET`
+1. Use ending tag /bankStatement on URL
+2. Fill out associated Key/Value pairs using data from transaction table in Params tab
+3. Keys: accountNumber, startDate, endDate
+Example Results:
+```
+[
+    {
+        "transactionID": "00f37da2-30a9-43da-bd6e-99375a418525",
+        "transactionType": "TRANSFER",
+        "amount": 100.00,
+        "accountNumber": "052225992067",
+        "status": "SUCCESS",
+        "createdAt": "2025-05-23",
+        "modifiedAt": "2025-05-23"
+    }
+]
 ```
