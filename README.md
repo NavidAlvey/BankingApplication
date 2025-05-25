@@ -111,3 +111,5 @@ Example Results:
     }
 ]
 ```
+4. Once Bank Statement request is sent, document will generate called "MyStatements.pdf" containing statement account transactions
+5. An email of document will also be sent to the accountNumber use in API call
