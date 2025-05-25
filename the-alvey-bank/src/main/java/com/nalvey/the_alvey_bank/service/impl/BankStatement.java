@@ -16,6 +16,7 @@ import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
+import com.nalvey.the_alvey_bank.dto.EmailDetails;
 import com.nalvey.the_alvey_bank.entity.Transaction;
 import com.nalvey.the_alvey_bank.entity.User;
 
@@ -38,6 +39,7 @@ public class BankStatement {
 
     private TransactionRepository transactionRepository;
     private UserRepository userRepository;
+    private EmailService emailService;
 
     private static final String FILE = "/Users/navidalvey/Desktop/Banking_Application/MyStatements.pdf";
 
@@ -150,6 +152,15 @@ public class BankStatement {
         document.add(transactionsTable);
 
         document.close();
+
+        EmailDetails emialDetails = EmailDetails.builder()
+            .recipient(user.getEmail())
+            .subject("THE ALVEY BANK: Statement of Account Transactions")
+            .messageBody("Attatched to this email is the following document: \n [MYSTATEMENT.PDF] which contains your Statement of Account Transactions")
+            .attachment(FILE)
+            .build();
+
+        emailService.sendEmailWithAttatchment(emialDetails);
 
         return transactionList;
     }        

@@ -4,4 +4,5 @@ import com.nalvey.the_alvey_bank.dto.EmailDetails;
 
 public interface EmailService {
     void sendEmailAlert(EmailDetails emailDetails);
+    void sendEmailWithAttatchment(EmailDetails emailDetails);
 }
