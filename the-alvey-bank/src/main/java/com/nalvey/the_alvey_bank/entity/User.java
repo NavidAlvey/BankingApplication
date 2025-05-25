@@ -42,6 +42,7 @@ public class User {
     private String phoneNumber;
     private String alternativePhoneNumber;
     private String status;
+    private String password;
     @CreationTimestamp
     private LocalDateTime createdAt;
     @UpdateTimestamp
