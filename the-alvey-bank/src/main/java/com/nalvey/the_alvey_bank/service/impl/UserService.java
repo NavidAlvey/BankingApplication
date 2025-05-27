@@ -3,6 +3,7 @@ package com.nalvey.the_alvey_bank.service.impl;
 import com.nalvey.the_alvey_bank.dto.BankResponse;
 import com.nalvey.the_alvey_bank.dto.CreditDebitRequest;
 import com.nalvey.the_alvey_bank.dto.InquiryRequest;
+import com.nalvey.the_alvey_bank.dto.LoginDto;
 import com.nalvey.the_alvey_bank.dto.TransferRequest;
 import com.nalvey.the_alvey_bank.dto.UserRequest;
 
@@ -15,5 +16,6 @@ public interface UserService {
     BankResponse creditAccount(CreditDebitRequest request);
     BankResponse debitAccount(CreditDebitRequest request);
     BankResponse transfer(TransferRequest request);
+    BankResponse login(LoginDto loginDto);
 }
  

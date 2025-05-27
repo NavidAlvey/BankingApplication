@@ -4,17 +4,23 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.nalvey.the_alvey_bank.config.JwtTokenProvider;
 import com.nalvey.the_alvey_bank.dto.AccountInfo;
 import com.nalvey.the_alvey_bank.dto.BankResponse;
 import com.nalvey.the_alvey_bank.dto.CreditDebitRequest;
 import com.nalvey.the_alvey_bank.dto.EmailDetails;
 import com.nalvey.the_alvey_bank.dto.InquiryRequest;
+import com.nalvey.the_alvey_bank.dto.LoginDto;
 import com.nalvey.the_alvey_bank.dto.TransactionDto;
 import com.nalvey.the_alvey_bank.dto.TransferRequest;
 import com.nalvey.the_alvey_bank.dto.UserRequest;
+import com.nalvey.the_alvey_bank.entity.Role;
 import com.nalvey.the_alvey_bank.entity.User;
 import com.nalvey.the_alvey_bank.repository.UserRepository;
 import com.nalvey.the_alvey_bank.utils.AccountUtils;
@@ -33,6 +39,12 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     PasswordEncoder passwordEncoder;
+
+    @Autowired
+    AuthenticationManager authenticationManager;
+
+    @Autowired
+    JwtTokenProvider jwtTokenProvider;
 
 // --- NEW ACCOUNT CREATION -------------------------------------------------------------------------------------------------------
     @Override
@@ -61,6 +73,7 @@ public class UserServiceImpl implements UserService {
             .phoneNumber(userRequest.getPhoneNumber())
             .alternativePhoneNumber(userRequest.getAlternativePhoneNumber())
             .status("ACTIVE")
+            .role(Role.valueOf("ROLE_ADMIN"))
             .build();
 
         User savedUser = userRepository.save(newUser);
@@ -85,6 +98,23 @@ public class UserServiceImpl implements UserService {
                     .build())
             .build();
 
+    }
+    // --- SECURED ACCOUNT LOGIN W/ TOKEN -------------------------------------------------------------------------------------------------------
+    public BankResponse login(LoginDto loginDto) {
+        Authentication authentication = null;
+        authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginDto.getEmail(), loginDto.getPassword()));
+
+        EmailDetails loginAlert = EmailDetails.builder()
+            .subject("You're logged in!")
+            .recipient(loginDto.getEmail())
+            .messageBody("You logged into your account. If you did not initiate this request, please contact your bank.")
+            .build();
+
+        emailService.sendEmailAlert(loginAlert);
+        return BankResponse.builder()
+            .responseCode("Login Success")
+            .responseMessage(jwtTokenProvider.generateToken(authentication)) 
+            .build();
     }
 // --- BALANCE INQUIRY -------------------------------------------------------------------------------------------------------
     @Override
