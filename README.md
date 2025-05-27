@@ -36,7 +36,7 @@
 1. For API testing locally: initialize `ngrok` instance locally with: `ngrok http 8080`
 2. Open <a href="https://navidalvey.postman.co/workspace/Navid-Alvey's-Workspace~5700eab0-164a-4a6d-88b7-377e2fb695fc/request/44583731-bcbb1d5f-8393-4bb6-8c1d-1636b4c9fa29" target="_blank">`Postman`</a> in browser to test & run APIs to application
     - Navigate to Workspaces > Navid Alvey's Workspace > Collections > the_alvey_bank > Add Request
-    - From dropdown selection, choose corresponding API call for request from `UserController.java` ie: `GET, POST, etc...`
+    - From dropdown selection, choose corresponding API request for request from `UserController.java` or `TransactionController.java` ie: `GET, POST, etc...`
 3. Copy & paste `ngrok URL` into `Postman` URL field and ensure to update end tag to corresponding request ie: `/api/user/debit, credit, balance, etc...`
     - Select `Body > raw` and input `JSON` formatted fields to test API
     - View results in "Responses" tab below
