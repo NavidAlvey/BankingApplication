@@ -1,20 +1,27 @@
-# Banking Application
+# SpringBoot FinTech Banking Application w/ Feature Services
 
 ## Application Overview
 **Account Creation & Verification**
+- Authorization & Authentication
+- User Account Login
+
+**Email Services**
+- Email Notificaitons w/ Each Type of Transaction
+- Transaction History Statement Report
 
 **Current Money Operations**
 - Debit
 - Credit
 - Transfers
 
-***//Future Operations//***
+**Documentation**
+- Swagger w/ Swagger UI - Test Environment
+
+***//Future Feature Operations//***
 - Credit Points
 - Points Shop
 - Credit Score
-
-**Documentation**
-- Swagger w/ Swagger UI
+- Two Factor OTP Authentication
 
 ## Start Application Services
 1. Initialize `Postgres` database locally with: `psql -h localhost -U postgres -d the_alvey_bank`
@@ -38,7 +45,6 @@
 
 ## Documentation w/ Swagger
 1. In new window tab, enter URL: `localhost:8080/swagger-ui/index.html#/`
-
 
 ## JSON Structure of Each API Call
 **Authorization**
@@ -125,4 +131,4 @@ Example Results:
 ]
 ```
 4. Once Bank Statement request is sent, document will generate called "MyStatements.pdf" containing statement account transactions
-5. An email of document will also be sent to the accountNumber use in API call
+5. A document will be emailed to the email associated with the accountNumber used in API request
