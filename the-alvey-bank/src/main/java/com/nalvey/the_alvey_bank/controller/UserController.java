@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.nalvey.the_alvey_bank.dto.BankResponse;
 import com.nalvey.the_alvey_bank.dto.CreditDebitRequest;
 import com.nalvey.the_alvey_bank.dto.InquiryRequest;
+import com.nalvey.the_alvey_bank.dto.LoginDto;
 import com.nalvey.the_alvey_bank.dto.TransferRequest;
 import com.nalvey.the_alvey_bank.dto.UserRequest;
 import com.nalvey.the_alvey_bank.service.impl.UserService;
@@ -102,4 +103,18 @@ public class UserController {
     public BankResponse transfer(@RequestBody TransferRequest request) {
         return userService.transfer(request);
     }
+//--------------------------------------------------------------------------------------
+    @Operation(
+        summary = "Login to Account",
+        description = "Using an email and password, login to a user's account"
+    )
+    @ApiResponse(
+        responseCode = "200",
+        description = "Http Status 200 SUCCESS"
+    )
+    @PostMapping("login")
+    public BankResponse login(@RequestBody LoginDto loginDto){
+        return userService.login(loginDto);
+    }
+
 }

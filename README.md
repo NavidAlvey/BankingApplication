@@ -41,6 +41,11 @@
 
 
 ## JSON Structure of Each API Call
+**Authorization**
+- After account creation, send a login request using account's `email` & `password`
+- Upon successful account login, an encrypted authorization token will be provided under `responseMessage`
+- In the `Headers` tab of each request, enter the Key/Value pair of "Authorization"/"Bearer (token)"
+
 **Create Account** - `POST`
 ```{
     "firstName": "string",
@@ -51,9 +56,17 @@
     "stateOfOrigin": "string",
     "email": "string",
     "phoneNumber": "string",
+    "password": "string",
     "alternativePhoneNumber": "string",
  }
  ```
+
+**Login** - `POST`
+```{
+    "email": "string",
+    "password": "string"
+}
+```
 
 **Balance Inquiry** - `GET`
 ```
