@@ -29,7 +29,7 @@ public class EmailServiceImpl implements EmailService {
 
     @Override
     public void sendEmailAlert(EmailDetails emailDetails) {
-        /*try {
+        try {
             SimpleMailMessage mailMessage = new SimpleMailMessage();
             mailMessage.setFrom(senderEmail);
             mailMessage.setTo(emailDetails.getRecipient());
@@ -41,12 +41,12 @@ public class EmailServiceImpl implements EmailService {
 
         } catch (MailException e) {
             throw new RuntimeException(e);
-        }*/
+        }
     }
 
     @Override
     public void sendEmailWithAttatchment(EmailDetails emailDetails) {
-        /*MimeMessage mimeMessage = javamailSender.createMimeMessage();
+        MimeMessage mimeMessage = javamailSender.createMimeMessage();
         MimeMessageHelper mimeMessageHelper;
         try {
             mimeMessageHelper = new MimeMessageHelper(mimeMessage, true);
@@ -63,6 +63,6 @@ public class EmailServiceImpl implements EmailService {
 
         } catch (MessagingException e) {
             throw new RuntimeException(e);
-        }*/
+        }
     }
 }
