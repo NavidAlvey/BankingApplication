@@ -1,6 +1,7 @@
 package com.nalvey.the_alvey_bank.utils;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Random;
 
 
 // ************************** 
@@ -38,7 +39,20 @@ public class AccountUtils {
     public static final String TRANSFER_SUCCESSFUL_CODE = "010";
     public static final String TRANSFER_SUCCESSFUL_MESSAGE = "Transfer Successful!";
 
-    
+    public static final String OTP_SENT_CODE = "011";
+    public static final String OTP_SENT_MESSAGE = "OTP has been successfully sent to user's email!";
+
+    public static final String OTP_NOT_SENT_CODE = "012";
+    public static final String OTP_NOT_SENT_MESSAGE = "OTP has not been sent to user's email!";
+
+    public static final String OTP_EXPIRED_CODE = "013";
+    public static final String OTP_EXPIRED_MESSAGE = "The OTP has expired!";
+
+    public static final String OTP_INVALID_CODE = "014";
+    public static final String OTP_INVALID_MESSAGE = "The OTP entered is invalid!";
+
+    public static final String OTP_VALID_CODE = "015";
+    public static final String OTP_VALID_MESSAGE = "This OTP is valid!";
 
     public static String generateAccountNumber() {
 
@@ -58,8 +72,17 @@ public class AccountUtils {
         String randomNumber = String.valueOf(randNumber);
         StringBuilder accountNumber = new StringBuilder();
         
-
         return accountNumber.append(formattedDate).append(String.format("%02d", lastTwoDigitsOfYear)).append(randomNumber).toString();
     }
 
+    public static String generateOtp() {
+        StringBuilder otp = new StringBuilder();
+        Random random = new Random();
+        int count = 0;
+        while (count < 8) {
+            otp.append(random.nextInt(10));
+            ++count;
+        }
+        return otp.toString();
+    }
 }
