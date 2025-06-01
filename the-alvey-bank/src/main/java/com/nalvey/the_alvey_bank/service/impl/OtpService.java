@@ -11,7 +11,6 @@ import com.nalvey.the_alvey_bank.dto.OtpResponse;
 import com.nalvey.the_alvey_bank.dto.OtpValidationRequest;
 import com.nalvey.the_alvey_bank.entity.Otp;
 import com.nalvey.the_alvey_bank.repository.OtpRepository;
-import com.nalvey.the_alvey_bank.repository.UserRepository;
 import com.nalvey.the_alvey_bank.utils.AccountUtils;
 
 import lombok.AllArgsConstructor;
@@ -27,30 +26,12 @@ import lombok.extern.slf4j.Slf4j;
 public class OtpService {
     private final OtpRepository otpRepository;
     private final EmailService emailService;
-    private final UserRepository userRepository;
 
     public BankResponse sendOtp(OtpRequest otpRequest){
         // generate otp
         // send otp
         // save otp
-        String email = otpRequest.getEmail();
-
-        if (email == null || email.isBlank()) {
-            return BankResponse.builder()
-                .responseCode("400")
-                .responseMessage("Email is required")
-                .accountInfo(null)
-                .build();
-        }
-
-        if (!userRepository.existsByEmail(email)){
-            return BankResponse.builder()
-                .responseCode("404")
-                .responseMessage("Email not registered")
-                .accountInfo(null)
-                .build();
-        }
-
+        
         String otp = AccountUtils.generateOtp();
         log.info("Otp: {}", otp);
         otpRepository.save(Otp.builder()
