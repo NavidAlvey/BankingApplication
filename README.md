@@ -28,7 +28,7 @@
 - Transfers
 
 **Documentation**
-- Swagger w/ Swagger UI - Test Environment
+- Swagger w/ Swagger UI
 
 ***//Future Feature Operations//***
 - Credit Points
