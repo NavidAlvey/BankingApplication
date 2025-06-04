@@ -1,4 +1,4 @@
-# SpringBoot FinTech Banking Application w/ Feature Services
+# SpringBoot FinTech Banking w/ Feature Services
 
 ## Tech Stack
 - Java 
