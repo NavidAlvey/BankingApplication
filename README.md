@@ -1,4 +1,4 @@
-# SpringBoot FinTech Banking Application w/ Feature Services
+# SpringBoot FinTech Banking w/ Feature Services
 
 ## Tech Stack
 - Java 
@@ -28,13 +28,12 @@
 - Transfers
 
 **Documentation**
-- Swagger w/ Swagger UI - Test Environment
+- Swagger w/ Swagger UI
 
 ***//Future Feature Operations//***
 - Credit Points
 - Points Shop
 - Credit Score
-- Two Factor OTP Authentication
 
 ## Start Application Services
 1. Initialize **Postgres** database locally with: `psql -h localhost -U postgres -d the_alvey_bank`
