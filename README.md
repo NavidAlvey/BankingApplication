@@ -34,7 +34,6 @@
 - Credit Points
 - Points Shop
 - Credit Score
-- Two Factor OTP Authentication
 
 ## Start Application Services
 1. Initialize **Postgres** database locally with: `psql -h localhost -U postgres -d the_alvey_bank`
