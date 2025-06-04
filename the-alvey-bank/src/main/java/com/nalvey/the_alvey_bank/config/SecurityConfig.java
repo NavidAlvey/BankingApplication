@@ -55,6 +55,7 @@ public class SecurityConfig {
             .requestMatchers(HttpMethod.POST, "/api/user/login").permitAll()
             .requestMatchers(HttpMethod.POST, "/api/otp/sendOtp").permitAll()
             .requestMatchers(HttpMethod.POST, "/api/otp/validateOtp").permitAll()
+            .requestMatchers(HttpMethod.POST, "/api/otp/**").permitAll()
             .anyRequest().authenticated());
 
         httpSecurity.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));

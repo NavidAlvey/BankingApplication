@@ -44,8 +44,8 @@ public class OtpService {
             .subject("SECURITY CODE")
             .recipient(otpRequest.getEmail())
             .messageBody("Please use the following security code OTP for the account " + otpRequest.getEmail() +
-             "\n Security Code OTP: " + otp + "\n This security code will expire in 5 minutes. \n If you don't recognize the account "
-             + otpRequest.getEmail() + ", please ignore this message. \n Thanks, \n The Alvey Bank")
+             "\nSecurity Code OTP: " + otp + "\nThis security code will expire in 5 minutes. \n\nIf you don't recognize the account "
+             + otpRequest.getEmail() + ", please ignore this message. \n\nThanks, \nThe Alvey Bank")
             .build());
 
         return BankResponse.builder()

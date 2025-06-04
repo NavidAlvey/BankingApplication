@@ -19,8 +19,8 @@ public class OtpController {
 
     private final OtpService otpService;
 
-    @PostMapping("sendOtp")
-    public BankResponse sendOtp(@RequestBody OtpRequest otpRequest){
+@PostMapping("sendOtp")
+public BankResponse sendOtp(@RequestBody OtpRequest otpRequest) {
         return otpService.sendOtp(otpRequest);
     }
 
