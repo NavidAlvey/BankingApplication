@@ -7,7 +7,7 @@
 - ngrok
 - Postman
 - cURL
-- Postgres
+- PostgreSQL
 - pgAdmin4
 - Swagger
 
